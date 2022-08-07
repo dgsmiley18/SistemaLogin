@@ -6,7 +6,11 @@ namespace SistemaLogin.Commands
     {
         public static void Conectar()
         {
-            const string connectionString = "Server=localhost,1433;Database=balta;User ID=sa;Password=2NNje*mG*!FoS5;TrustServerCertificate=true";
+
+            StreamReader config = new StreamReader("config.json");
+            var banco = JsonConvert.DeserializeObject<Banco>(config.ReadToEnd());
+            string connectionString = $"Server={banco.Server},{banco.Port};Database={banco.Database};Uid={banco.Uid};Pwd={banco.Pwd};TrustServerCertificate=true";
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
